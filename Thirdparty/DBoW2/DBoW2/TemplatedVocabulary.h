@@ -1348,6 +1348,7 @@ namespace DBoW2{
 			f.read((char*)&nIsLeaf, sizeof(nIsLeaf));
 
 			unsigned char *sElement=new unsigned char[F::L];
+			f.read(sElement, sizeof(unsigned char)*F::L);
 			F::fromBinary(m_nodes[nid].descriptor, sElement);
 			delete[] sElement;
 
