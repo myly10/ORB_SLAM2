@@ -1312,10 +1312,10 @@ namespace DBoW2{
 		ss>>m_L;
 		ss>>n1;
 		ss>>n2;*/
-		f.read(&m_k, sizeof(int));
-		f.read(&m_L, sizeof(int));
-		f.read(&n1, sizeof(int));
-		f.read(&n2, sizeof(int));
+		f.read((char*)&m_k, sizeof(m_k));
+		f.read((char*)&m_L, sizeof(m_L));
+		f.read((char*)&n1, sizeof(n1));
+		f.read((char*)&n2, sizeof(n2));
 
 		if (m_k<0 || m_k>20 || m_L<1 || m_L>10 || n1<0 || n1>5 || n2<0 || n2>3){
 			std::cerr<<"Vocabulary loading failure: This is not a correct text file!"<<endl;
@@ -1340,18 +1340,18 @@ namespace DBoW2{
 			m_nodes[nid].id=nid;
 
 			int pid;
-			f.read(&pid, sizeof(int));
+			f.read((char*)&pid, sizeof(pid));
 			m_nodes[nid].parent=pid;
 			m_nodes[pid].children.push_back(nid);
 
 			bool nIsLeaf;
-			f.read(&nIsLeaf, sizeof(char));
+			f.read((char*)&nIsLeaf, sizeof(nIsLeaf));
 
 			unsigned char *sElement=new unsigned char[F::L];
 			F::fromBinary(m_nodes[nid].descriptor, sElement);
 			delete[] sElement;
 
-			f.read(&m_nodes[nid].weight, sizeof(double));
+			f.read((char*)&m_nodes[nid].weight, sizeof(m_nodes[nid].weight));
 
 			if (nIsLeaf>0){
 				int wid=m_words.size();
