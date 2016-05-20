@@ -165,6 +165,22 @@ void LocalMapping::ProcessNewKeyFrame()
 
     // Insert Keyframe in Map
     mpMap->AddKeyFrame(mpCurrentKeyFrame);
+
+    if (System::mbSaveImageOnTheFly){
+		cv::Mat *imgRaw=mpCurrentKeyFrame->imgRaw;
+		std::stringstream ss;
+		ss<<fixed<<setprecision(6)<<(mpCurrentKeyFrame->mTimeStamp);
+		if (imgRaw[1].empty()) {
+			cv::imwrite(std::string("keyimages/") + ss.str() + ".jpg", imgRaw[0]);
+			imgRaw[0].release();
+		}
+		else{
+			cv::imwrite(std::string("keyimages/L/")+ss.str()+".jpg", imgRaw[0]);
+			cv::imwrite(std::string("keyimages/R/")+ss.str()+".jpg", imgRaw[1]);
+			imgRaw[0].release();
+			imgRaw[1].release();
+		}
+	}
 }
 
 void LocalMapping::MapPointCulling()

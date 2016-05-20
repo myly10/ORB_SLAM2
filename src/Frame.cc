@@ -59,7 +59,7 @@ namespace ORB_SLAM2{
 
 	Frame::Frame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeStamp, ORBextractor *extractorLeft,
 				 ORBextractor *extractorRight, ORBVocabulary *voc, cv::Mat &K, cv::Mat &distCoef, const float &bf,
-				 const float &thDepth, const cv::Mat &imgLC, const cv::Mat &imgRC)
+				 const float &thDepth)
 			:mpORBvocabulary(voc),
 			 mpORBextractorLeft(extractorLeft),
 			 mpORBextractorRight(extractorRight),
@@ -68,9 +68,7 @@ namespace ORB_SLAM2{
 			 mDistCoef(distCoef.clone()),
 			 mbf(bf),
 			 mThDepth(thDepth),
-			 mpReferenceKF(static_cast<KeyFrame *>(NULL)),
-			 imgLeftColor(imgLC.clone()),
-			 imgRightColor(imgRC.clone())
+			 mpReferenceKF(static_cast<KeyFrame *>(NULL))
 	{
 		// Frame ID
 		mnId=nNextId++;
@@ -125,9 +123,7 @@ namespace ORB_SLAM2{
 		AssignFeaturesToGrid();
 	}
 
-	Frame::Frame(const cv::Mat &imGray, const cv::Mat &imDepth, const double &timeStamp, ORBextractor *extractor,
-				 ORBVocabulary *voc, cv::Mat &K, cv::Mat &distCoef, const float &bf, const float &thDepth,
-				 const cv::Mat &imgC)
+	Frame::Frame(const cv::Mat &imGray, const cv::Mat &imDepth, const double &timeStamp, ORBextractor *extractor, ORBVocabulary *voc, cv::Mat &K, cv::Mat &distCoef, const float &bf, const float &thDepth)
 			:mpORBvocabulary(voc),
 			 mpORBextractorLeft(extractor),
 			 mpORBextractorRight(static_cast<ORBextractor *>(NULL)),
@@ -135,8 +131,7 @@ namespace ORB_SLAM2{
 			 mK(K.clone()),
 			 mDistCoef(distCoef.clone()),
 			 mbf(bf),
-			 mThDepth(thDepth),
-			 imgLeftColor(imgC.clone())
+			 mThDepth(thDepth)
 	{
 		// Frame ID
 		mnId=nNextId++;
@@ -188,8 +183,7 @@ namespace ORB_SLAM2{
 	}
 
 
-	Frame::Frame(const cv::Mat &imGray, const double &timeStamp, ORBextractor *extractor, ORBVocabulary *voc,
-				 cv::Mat &K, cv::Mat &distCoef, const float &bf, const float &thDepth, const cv::Mat &imgC)
+	Frame::Frame(const cv::Mat &imGray, const double &timeStamp, ORBextractor *extractor, ORBVocabulary *voc, cv::Mat &K, cv::Mat &distCoef, const float &bf, const float &thDepth)
 			:mpORBvocabulary(voc),
 			 mpORBextractorLeft(extractor),
 			 mpORBextractorRight(static_cast<ORBextractor *>(NULL)),
@@ -197,8 +191,7 @@ namespace ORB_SLAM2{
 			 mK(K.clone()),
 			 mDistCoef(distCoef.clone()),
 			 mbf(bf),
-			 mThDepth(thDepth),
-			 imgLeftColor(imgC.clone())
+			 mThDepth(thDepth)
 	{
 		// Frame ID
 		mnId=nNextId++;

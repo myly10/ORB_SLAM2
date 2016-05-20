@@ -29,9 +29,11 @@
 namespace ORB_SLAM2
 {
 
-System::System(const string &strVocFile, const string &strSettingsFile, const eSensor sensor,
-               const bool bUseViewer):mSensor(sensor),mbReset(false),mbActivateLocalizationMode(false),
-        mbDeactivateLocalizationMode(false)
+System::System(const string &strVocFile, const string &strSettingsFile, const eSensor sensor, const bool bUseViewer)
+        :mSensor(sensor),
+         mbReset(false),
+		 mbActivateLocalizationMode(false),
+		 mbDeactivateLocalizationMode(false)
 {
     // Output welcome message
     cout << endl <<
@@ -371,6 +373,28 @@ void System::SaveKeyFrameTrajectoryTUM(const string &filename)
 
     f.close();
     cout << endl << "trajectory saved!" << endl;
+	if (!mbSaveImageOnTheFly){
+		cout<<"saving images..."<<endl;
+		for (KeyFrame *pKF:vpKFs) {
+			cv::Mat *imgRaw = pKF->imgRaw;
+			std::stringstream ss;
+			ss << fixed << setprecision(6) << (pKF->mTimeStamp);
+			switch (mSensor) {
+			case MONOCULAR:
+				cv::imwrite(std::string("keyimages/") + ss.str() + ".jpg", imgRaw[0]);
+				imgRaw[0].release();
+				break;
+			case STEREO:
+				cv::imwrite(std::string("keyimages/L/") + ss.str() + ".jpg", imgRaw[0]);
+				cv::imwrite(std::string("keyimages/R/") + ss.str() + ".jpg", imgRaw[1]);
+				imgRaw[0].release();
+				imgRaw[1].release();
+				break;
+			default:
+				cerr << "Error: sensor type not implemented yet" << endl;
+			}
+		}
+	}
 }
 
 void System::SaveTrajectoryKITTI(const string &filename)

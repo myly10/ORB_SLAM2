@@ -94,6 +94,7 @@ public:
 
     // Current Frame
     Frame mCurrentFrame;
+    cv::Mat mCurrentFrameImgRaw[2];
     cv::Mat mImGray;
 
     // Initialization Variables (Monocular)
@@ -102,6 +103,7 @@ public:
     std::vector<cv::Point2f> mvbPrevMatched;
     std::vector<cv::Point3f> mvIniP3D;
     Frame mInitialFrame;
+	cv::Mat mInitialFrameImgRaw[2];
 
     // Lists used to recover the full camera trajectory at the end of the execution.
     // Basically we store the reference keyframe for each frame and its relative transformation
@@ -137,8 +139,11 @@ protected:
     void UpdateLocalMap();
     void UpdateLocalPoints();
     void UpdateLocalKeyFrames();
+	void UpdateCurrentFrame(const cv::Mat &imGray, const double &timeStamp, ORBextractor *extractor, ORBVocabulary *voc, cv::Mat &K, cv::Mat &distCoef, const float &bf, const float &thDepth, const cv::Mat &imageRaw);
+	void UpdateCurrentFrame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeStamp, ORBextractor *extractorLeft, ORBextractor *extractorRight, ORBVocabulary *voc, cv::Mat &K,cv::Mat &distCoef, const float &bf, const float &thDepth, const cv::Mat &imageL, const cv::Mat &imageR);
+	// RGBD not implemented
 
-    bool TrackLocalMap();
+	bool TrackLocalMap();
     void SearchLocalPoints();
 
     bool NeedNewKeyFrame();

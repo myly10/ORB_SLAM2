@@ -43,7 +43,7 @@ class KeyFrameDatabase;
 class KeyFrame
 {
 public:
-    KeyFrame(Frame &F, Map* pMap, KeyFrameDatabase* pKFDB);
+    KeyFrame(Frame &F, Map* pMap, KeyFrameDatabase* pKFDB, cv::Mat *imgRaw);
 
     // Pose functions
     void SetPose(const cv::Mat &Tcw);
@@ -119,7 +119,7 @@ public:
 
     // The following variables are accesed from only 1 thread or never change (no mutex needed).
 public:
-    cv::Mat imgL, imgR;
+    cv::Mat imgRaw[2];
     static long unsigned int nNextId;
     long unsigned int mnId;
     const long unsigned int mnFrameId;

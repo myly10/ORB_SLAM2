@@ -49,6 +49,7 @@ class LoopClosing;
 class System
 {
 public:
+	static const bool mbSaveImageOnTheFly=false;
     // Input sensor
     enum eSensor{
         MONOCULAR=0,
