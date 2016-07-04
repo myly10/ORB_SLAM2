@@ -135,9 +135,12 @@ void Viewer::Run()
         pangolin::FinishFrame();
 
         cv::Mat im = mpFrameDrawer->DrawFrame();
+        
         cv::imshow("ORB-SLAM2: Current Frame",im);
         cv::imwrite("/tmp/window.jpg", im);
         cv::waitKey(mT);
+        
+        d_cam.SaveRenderNow("/tmp/rendermap", 1.0);
 
         if(menuReset)
         {
